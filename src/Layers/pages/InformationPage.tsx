@@ -1,8 +1,7 @@
-import NavBar from "../widgets/NavBar/NavBar"
+import NavBar from "../entities/NavBar/NavBar"
 export default function InformationPage() {
     return (
         <>
-            <NavBar/>
             <p>InformationPage</p>
         </>
     )
