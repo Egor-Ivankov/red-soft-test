@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {Avatar, 
         Button, 
         TextField, 
@@ -14,8 +13,9 @@ import {Avatar,
         ThemeProvider,
     } from '@mui/material';
 
+import { useEffect } from 'react';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { setLog } from '../../shared/lib/redux/auth/authSlice';
+import { setAuth, setLog } from '../../shared/lib/redux/auth/authSlice';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { useDispatch } from 'react-redux/es/exports';
 import type { RootState } from '../../shared/lib/redux/store';
@@ -40,6 +40,12 @@ export default function SignIn() {
     const isAuth = useSelector <RootState>(state => state.auth.isAuth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (localStorage.getItem('user')) {
+            dispatch(setAuth());
+        }
+    }, []);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -114,7 +120,7 @@ export default function SignIn() {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href="#" variant="body2">
+                                    <Link href="/signUp" variant="body2">
                                         Forgot password?
                                     </Link>
                                 </Grid>
