@@ -12,8 +12,8 @@ const authSlice = createSlice({
         setAuth: state => {
             state.isAuth = true;
         },
-        setLog: state => {
-            state.isLog = true;
+        setLog: (state, actions) => {
+            state.isLog = actions.payload;
         }
     }
 })

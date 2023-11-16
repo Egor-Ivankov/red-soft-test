@@ -62,7 +62,7 @@ export default function SignIn() {
             alert('Неверные данные');
         } else {
             alert('Доступ получен');
-            dispatch(setLog());
+            dispatch(setLog(true));
             navigate('/');
         }
     };
