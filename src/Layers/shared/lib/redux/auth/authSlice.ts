@@ -9,11 +9,11 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setAuth: state => {
-            state.isAuth = true;
+        setAuth: (state, action) => {
+            state.isAuth = action.payload;
         },
-        setLog: (state, actions) => {
-            state.isLog = actions.payload;
+        setLog: (state, action) => {
+            state.isLog = action.payload;
         }
     }
 })

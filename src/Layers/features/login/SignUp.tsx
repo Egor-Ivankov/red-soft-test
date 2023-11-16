@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {Avatar, 
         Button, 
         CssBaseline, 
@@ -16,7 +16,7 @@ import {Avatar,
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useDispatch } from 'react-redux/es/exports';
-import { setAuth } from '../../shared/lib/redux/auth/authSlice';
+import { setAuth, setLog } from '../../shared/lib/redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 function Copyright(props: any) {
@@ -34,7 +34,6 @@ function Copyright(props: any) {
 
 const defaultTheme = createTheme();
 
-
 export default function SignUp() {
     
     const dispatch = useDispatch();
@@ -49,9 +48,10 @@ export default function SignUp() {
         }
         localStorage.setItem('user', JSON.stringify(user));
         
-        alert('Регистрация успешна, подтвердите вход');
-        dispatch(setAuth());
-        navigate('/login');
+        alert('Регистрация успешна');
+        dispatch(setAuth(true));
+        dispatch(setLog(true));
+        navigate('/');
 };
 
     return (
@@ -74,27 +74,6 @@ export default function SignUp() {
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        autoComplete="given-name"
-                                        name="firstName"
-                                        required
-                                        fullWidth
-                                        id="firstName"
-                                        label="First Name"
-                                        autoFocus
-                                        />
-                                </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="family-name"
-                                    />
-                            </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     required
@@ -115,12 +94,6 @@ export default function SignUp() {
                                     id="password"
                                     autoComplete="new-password"
                                     />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
                             </Grid>
                         </Grid>
                         <Button

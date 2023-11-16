@@ -43,7 +43,9 @@ export default function SignIn() {
 
     useEffect(() => {
         if (localStorage.getItem('user')) {
-            dispatch(setAuth());
+            dispatch(setAuth(true));
+            dispatch(setLog(true));
+            navigate('/');
         }
     }, []);
 
@@ -55,7 +57,7 @@ export default function SignIn() {
 
         const user = JSON.parse(localStorage.getItem('user')!);
         
-        if (!isAuth) {
+        if (!isAuth || localStorage.getItem('user')) {
             alert('Вы не зарегистрированы')
             navigate('/signUp');
         } else if (user.email !== currentEmail || user.password !== currentPassword) {
@@ -105,10 +107,6 @@ export default function SignIn() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
                             />
                             <Button
                                 type="submit"
