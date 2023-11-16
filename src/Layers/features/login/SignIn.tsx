@@ -13,7 +13,13 @@ import {Avatar,
         createTheme,
         ThemeProvider,
     } from '@mui/material';
+
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { setLog } from '../../shared/lib/redux/auth/authSlice';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useDispatch } from 'react-redux/es/exports';
+import type { RootState } from '../../shared/lib/redux/store';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props: any) {
     return (
@@ -31,13 +37,28 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const isAuth = useSelector <RootState>(state => state.auth.isAuth);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-        });
+        const currentEmail = data.get('email');
+        const currentPassword = data.get('password');
+
+        const user = JSON.parse(localStorage.getItem('user')!);
+        
+        if (!isAuth) {
+            alert('Вы не зарегистрированы')
+            navigate('/signUp');
+        } else if (user.email !== currentEmail || user.password !== currentPassword) {
+            alert('Неверные данные');
+        } else {
+            alert('Доступ получен');
+            dispatch(setLog());
+            navigate('/');
+        }
     };
 
     return (

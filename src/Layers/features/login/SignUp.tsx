@@ -13,7 +13,11 @@ import {Avatar,
         createTheme,
         ThemeProvider
     } from '@mui/material';
+
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useDispatch } from 'react-redux/es/exports';
+import { setAuth } from '../../shared/lib/redux/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props: any) {
     return (
@@ -28,17 +32,26 @@ function Copyright(props: any) {
     );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+
 export default function SignUp() {
+    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-    });
+        const user = {
+            email: data.get('email'),
+            password: data.get('password'),
+        }
+        localStorage.setItem('user', JSON.stringify(user));
+        
+        alert('Регистрация успешна, подтвердите вход');
+        dispatch(setAuth());
+        navigate('/login');
 };
 
     return (
