@@ -1,7 +1,7 @@
 import { Button, Box } from '@mui/material';
 import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux/es/exports';
-import { setAuth, setLog } from '../shared/lib/redux/auth/authSlice';
+import { setAuth, setLog } from '../../Layers/shared/lib/redux/auth/authSlice';
 
 export default function MainPage() {
     const dispatch = useDispatch();

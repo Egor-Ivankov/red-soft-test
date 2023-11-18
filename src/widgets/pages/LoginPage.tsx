@@ -1,7 +1,7 @@
-import SignIn from "../features/login/SignIn";
+import SignIn from "../../Layers/features/login/SignIn";
 import { useEffect } from 'react';
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { RootState } from "../shared/lib/redux/store";
+import { RootState } from "../../Layers/shared/lib/redux/store";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
@@ -14,9 +14,13 @@ export default function LoginPage() {
         }
     },[]);
 
+
+
     return (
         <>
             <SignIn/>
         </>
     )
 }
+
+
