@@ -58,7 +58,7 @@ export default function SignIn() {
         const user = JSON.parse(localStorage.getItem('user')!);
         
         if (!isAuth || localStorage.getItem('user')) {
-            alert('Вы не зарегистрированы')
+            alert('Вы не зарегистрированы');
             navigate('/signUp');
         } else if (user.email !== currentEmail || user.password !== currentPassword) {
             alert('Неверные данные');
