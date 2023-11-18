@@ -15,10 +15,12 @@ export default function MainPage() {
     const deletAuth = () => {
         if(localStorage.getItem('user')) {
             alert('Аккаунт удален');
+            localStorage.clear();
+            dispatch(setAuth(false));
+            dispatch(setLog(false));
+        } else {
+            alert('Аккаунт не найден');
         }
-        localStorage.clear();
-        dispatch(setAuth(false));
-        dispatch(setLog(false));
     }
 
     return (
