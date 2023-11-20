@@ -1,8 +1,6 @@
 import {Avatar, 
         Button, 
         TextField, 
-        FormControlLabel, 
-        Checkbox, 
         Link, 
         Grid, 
         Typography, 
@@ -13,6 +11,7 @@ import {Avatar,
         ThemeProvider,
     } from '@mui/material';
 
+import Copyright from '../../entities/Copyrigth/Copyrigth';
 import { useEffect } from 'react';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { setAuth, setLog } from '../../shared/lib/redux/auth/authSlice';
@@ -21,22 +20,10 @@ import { useDispatch } from 'react-redux/es/exports';
 import type { RootState } from '../../shared/lib/redux/store';
 import { useNavigate } from 'react-router-dom';
 
-function Copyright(props: any) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-            Your Website
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-        </Typography>
-    );
-}
-
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+
     const isAuth = useSelector <RootState>(state => state.auth.isAuth);
     const navigate = useNavigate();
     const dispatch = useDispatch();

@@ -11,29 +11,19 @@ import {Avatar,
         createTheme,
         ThemeProvider
     } from '@mui/material';
-
+    
+import Copyright from '../../entities/Copyrigth/Copyrigth';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useDispatch } from 'react-redux/es/exports';
 import { setAuth, setLog } from '../../shared/lib/redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
-
-function Copyright(props: any) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-    
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -50,7 +40,26 @@ export default function SignUp() {
         dispatch(setAuth(true));
         dispatch(setLog(true));
         navigate('/');
-};
+    };
+
+    const validationSchema = Yup.object({
+        email: Yup.string().email('Invalid email address').required('Required'),
+        password: Yup.string().min(6, 'min 6 symbols').required('Required'),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: validationSchema,
+        onSubmit: () => {
+            alert('Registration successful');
+            dispatch(setAuth(true));
+            dispatch(setLog(true));
+            navigate('/');
+        },
+    });
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -80,6 +89,9 @@ export default function SignUp() {
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    value={formik.values.email}
+                                    onChange={formik.handleChange}
+                                    helperText={formik.touched.email && formik.errors.email}
                                     />
                             </Grid>
                             <Grid item xs={12}>
@@ -91,6 +103,9 @@ export default function SignUp() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
+                                    value={formik.values.password}
+                                    onChange={formik.handleChange}
+                                    helperText={formik.touched.password && formik.errors.password}
                                     />
                             </Grid>
                         </Grid>
@@ -99,6 +114,7 @@ export default function SignUp() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            disabled={!formik.isValid || formik.isSubmitting}
                             >
                             Sign Up
                         </Button>
@@ -114,5 +130,5 @@ export default function SignUp() {
                 <Copyright sx={{ mt: 5 }} />
             </Container>
         </ThemeProvider>
-);
+    );
 }
